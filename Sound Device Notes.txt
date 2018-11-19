@@ -1,0 +1,124 @@
+[ LCD PART]
+
+#--------------------#
+|21:07__VolMix___100%|
+|  Process.exe   75% |
+|                    |
+|                    |
+#--------------------#
+
+Class   InfoToPrint()
+	{
+		Time,
+		MasterVolume,
+		ProcessName,
+		PID,
+		Volume,
+		Muted
+	}
+
+
+
+PSUEDO KOD
+
+
+Setup:
+1.1) Check serial connection
+	Else raise exception
+
+1.2) print Start message to LCD
+
+1.3) List Audio processes 	#hantera dom via Namn (DisplayName)
+	1.3.1) Add to List
+	1.3.2) Remove processes that exist in blacklist  example:
+				0 - @%SystemRoot%\System32\AudioSrv.Dll,-202
+
+Main:
+2.1) Read input from Serial
+	[Input] Left
+	[Input] Up
+	[Err] ErrMsg 332
+
+2.2) Respond to Serial Input
+
+2.3) Loop a Volume change check if Volume changed outside of the script
+
+2.4) IF ProcessVolume > MasterVolume, Increase Mastervolume first
+
+
+
+#############################################################################
+sessions = AudioUtilities.GetAllSessions()
+	for session in sessions:
+		volume = cast(session.SimpleAudioVolume, POINTER(IAudioEndpointVolume))
+		help(volume)
+
+
+Help on POINTER(IAudioEndpointVolume) in module comtypes object:
+
+class POINTER(IAudioEndpointVolume)(pycaw.pycaw.IAudioEndpointVolume, POINTER(IUnknown))
+ |  The most basic COM interface.
+ |
+ |  Each subclasses of IUnknown must define these class attributes:
+ |
+ |  _iid_ - a GUID instance defining the identifier of this interface
+ |
+ |  _methods_ - a list of methods for this interface.
+ |
+ |  The _methods_ list must in VTable order.  Methods are specified
+ |  with STDMETHOD or COMMETHOD calls.
+ |
+ |  Method resolution order:
+ |      POINTER(IAudioEndpointVolume)
+ |      pycaw.pycaw.IAudioEndpointVolume
+ |      POINTER(IUnknown)
+ |      IUnknown
+ |      _compointer_base
+ |      ctypes.c_void_p
+ |      _ctypes._SimpleCData
+ |      _ctypes._CData
+ |      builtins.object
+ |
+ |  Data and other attributes defined here:
+ |
+ |  __com_interface__ = <class 'pycaw.pycaw.IAudioEndpointVolume'>
+ |      The most basic COM interface.
+ |
+ |      Each subclasses of IUnknown must define these class attributes:
+ |
+ |      _iid_ - a GUID instance defining the identifier of this interface
+ |
+ |      _methods_ - a list of methods for this interface.
+ |
+ |      The _methods_ list must in VTable order.  Methods are specified
+ |      with STDMETHOD or COMMETHOD calls.
+ |
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from pycaw.pycaw.IAudioEndpointVolume:
+ |
+ |  GetChannelCount = <COM method offset 5: WinFunctionType>
+ |
+ |
+ |  GetChannelVolumeLevel = <COM method offset 12: WinFunctionType>
+ |
+ |
+ |  GetChannelVolumeLevelScalar = <COM method offset 13: WinFunctionType>
+ |
+ |
+ |  GetMasterVolumeLevel = <COM method offset 8: WinFunctionType>
+ |
+ |
+ |  GetMasterVolumeLevelScalar = <COM method offset 9: WinFunctionType>
+ |
+ |
+ |  GetMute = <COM method offset 15: WinFunctionType>
+ |
+ |
+ |  GetVolumeRange = <COM method offset 20: WinFunctionType>
+ |
+ |
+ |  GetVolumeStepInfo = <COM method offset 16: WinFunctionType>
+ |
+
+None
+
